@@ -2,6 +2,7 @@ CC := g++ # Compilador
 BUILDDIR := build
 LIBDIR := lib
 TARGET := ../server.out
+LOCAL := ./bin/server.out
 
 DIRS := bin doc include lib src
 
@@ -24,18 +25,20 @@ BUILD := *.so
 # Comando para limpar arquivos
 RM := rm -rf
 
-.PHONY: all clean mkdirs
+.PHONY: all clean mkdirs local
 
 all: mkdirs $(TARGET)
+
+local: mkdirs $(LOCAL)
 
 # Cria os diretórios necessários
 mkdirs:
 	@mkdir -p $(BUILDDIR) $(DIRS)
 
 # Compila e executa o programa
-$(TARGET): $(OBJECTS)
+$(TARGET) $(LOCAL): $(OBJECTS)
 	@echo "Linking..."
-	$(CC) $^ -o $(TARGET) $(LIB)
+	$(CC) $^ -o $@ $(LIB)
 
 $(BUILDDIR)/%.o: src/%.$(SRCEXT)
 	$(CC) $(CXXFLAGS) $(INC) -c -o $@ $<
@@ -46,6 +49,6 @@ $(BUILDDIR)/%.o: include/%.$(SRCEXT)
 # Apaga todos os arquivos .o e o executável criado
 clean:
 	@echo "Cleaning..."; 
-	$(RM) $(BUILDDIR) $(TARGET)
+	$(RM) $(BUILDDIR) $(TARGET) $(LOCAL)
 
 #------------------------------------------------------------------------------#
