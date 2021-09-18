@@ -10,7 +10,9 @@
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
+
 #include "asio.hpp"
+#include "client.hpp"
 
 using asio::ip::tcp;
 

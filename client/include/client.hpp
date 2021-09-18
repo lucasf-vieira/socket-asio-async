@@ -8,33 +8,29 @@
 class Client
 {
 private:
-   enum class BEBIDA
-   {
-      CERVEJA,
-      AGUA,
-      REFRIGERANTE
-   };
+   enum class Drink;
 
    int mClientID;
-   std::array<BEBIDA, 3> mDrinksArray;
+   std::array<int, 3> mDrinksArray;
 
 public:
-   Client(/* args */);
+   Client();
    bool initialize_client_id();
 
-   int get_client_id();
+   int get_client_id() const;
+   int get_beer_quantity() const;
+   int get_water_quantity() const;
+   int get_soda_quantity() const;
 
    void make_order();
    void make_order(int NumCervejas, int NumAguas, int NumRefrigerantes);
-   bool check_availability(BEBIDA Drink, int Quantity);
+   bool check_availability(Drink Drink, int Quantity);
 
-   BEBIDA get_cerveja();
-   BEBIDA get_agua();
-   BEBIDA get_refrigerante();
+   Drink beer_type();
+   Drink water_type();
+   Drink soda_type();
 
-   void add_cerveja(int Quantity);
-   void add_agua(int Quantity);
-   void add_refrigerante(int Quantity);
+   void add_drink(Drink fDrink, int Quantity);
 
    friend std::ostream &operator<<(std::ostream &output, const Client &client);
 };
