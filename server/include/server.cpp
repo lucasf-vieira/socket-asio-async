@@ -5,7 +5,7 @@ using asio::ip::tcp;
 Server::Server(asio::io_context &io_context, short port)
     : acceptor_(io_context, tcp::endpoint(tcp::v4(), port))
 {
-   std::cout << "Server started. Listening on port " << port << std::endl;
+   std::cout << "Servidor iniciado. Escutando na porta " << port << std::endl;
    do_accept();
 }
 

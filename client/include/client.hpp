@@ -10,9 +10,6 @@ class Client
 private:
    enum class Drink;
 
-   int mClientID;
-   std::array<int, 3> mDrinksArray;
-
 public:
    Client();
    bool initialize_client_id();
@@ -33,6 +30,10 @@ public:
    void add_drink(Drink fDrink, int Quantity);
 
    friend std::ostream &operator<<(std::ostream &output, const Client &client);
+
+private:
+   int mClientID;
+   std::array<int, 3> mDrinksArray;
 };
 
 std::ostream &operator<<(std::ostream &output, const Client &client);

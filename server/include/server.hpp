@@ -8,6 +8,7 @@
 
 #include "asio.hpp"
 #include "session.hpp"
+#include "drink_store.hpp"
 
 using asio::ip::tcp;
 
@@ -17,6 +18,7 @@ public:
    Server(asio::io_context &io_context, short port);
 
 private:
+   DrinkStore mDrinkStore;
    tcp::acceptor acceptor_;
 
    void do_accept();
