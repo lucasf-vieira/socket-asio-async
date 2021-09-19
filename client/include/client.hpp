@@ -5,37 +5,40 @@
 #include <iostream>
 #include <string>
 
+// Include da biblioteca Asio
+#include "asio/io_context.hpp"
+#include "asio/ip/tcp.hpp"
+#include "asio/connect.hpp"
+#include "asio/read.hpp"
+#include "asio/write.hpp"
+
+// Include de arquivos pessoais
+#include "drink_client.hpp"
+
+using asio::ip::tcp;
+
 class Client
 {
+   // Atributos privados
 private:
-   enum class Drink;
+   enum Constants : int
+   {
+      BufferMaxLength = 1024
+   };
+
+   char mRequest[Constants::BufferMaxLength];
+   char mReply[Constants::BufferMaxLength];
+
+   tcp::socket mSocket;
+   tcp::resolver mResolver;
 
 public:
-   Client();
-   bool initialize_client_id();
+   Client(asio::io_context &io_context, char *HostIPv4, char *Port);
+   void start(std::array<int, 3> DrinksArray);
 
-   int get_client_id() const;
-   int get_beer_quantity() const;
-   int get_water_quantity() const;
-   int get_soda_quantity() const;
-
-   void make_order();
-   void make_order(int NumCervejas, int NumAguas, int NumRefrigerantes);
-   bool check_availability(Drink Drink, int Quantity);
-
-   Drink beer_type();
-   Drink water_type();
-   Drink soda_type();
-
-   void add_drink(Drink fDrink, int Quantity);
-
-   friend std::ostream &operator<<(std::ostream &output, const Client &client);
-
+   // Métodos privados
 private:
-   int mClientID;
-   std::array<int, 3> mDrinksArray;
+   void read_server();
 };
-
-std::ostream &operator<<(std::ostream &output, const Client &client);
 
 #endif

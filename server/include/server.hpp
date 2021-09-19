@@ -6,7 +6,9 @@
 #include <memory>
 #include <utility>
 
-#include "asio.hpp"
+#include "asio/io_context.hpp"
+#include "asio/ip/tcp.hpp"
+
 #include "session.hpp"
 #include "drink_store.hpp"
 

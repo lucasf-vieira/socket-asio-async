@@ -11,7 +11,12 @@
 #include <cstring>
 #include <iostream>
 
-#include "asio.hpp"
+#include "asio/io_context.hpp"
+#include "asio/ip/tcp.hpp"
+#include "asio/connect.hpp"
+#include "asio/read.hpp"
+#include "asio/write.hpp"
+
 #include "client.hpp"
 
 using asio::ip::tcp;
@@ -36,24 +41,13 @@ int main(int argc, char *argv[])
          max_length = 1024
       };
 
+      DrinkClient StoreClient;
+
       asio::io_context io_context;
+      StoreClient.connect(io_context, argv[1], argv[2]);
 
-      tcp::socket s(io_context);
-      tcp::resolver resolver(io_context);
-      asio::connect(s, resolver.resolve(argv[1], argv[2]));
-
-      std::cout << "Enter message: ";
-      char request[max_length];
-      std::cin.getline(request, max_length);
-      size_t request_length = std::strlen(request);
-
-      asio::write(s, asio::buffer(request, request_length));
-
-      char reply[max_length];
-      size_t reply_length = asio::read(s, asio::buffer(reply, request_length));
-      std::cout << "Reply is: ";
-      std::cout.write(reply, reply_length);
-      std::cout << "\n";
+      StoreClient.request_drinks();
+      StoreClient.make_order();
    }
    catch (std::exception &e)
    {

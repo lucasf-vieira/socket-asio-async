@@ -10,7 +10,7 @@ enum class DrinkStore::Drink
 DrinkStore::DrinkStore()
 {
    Parser mParser;
-   mDrinksArray = mParser.request_drinks();
+   mDrinksArray = mParser.initialize_drinks();
 }
 
 void DrinkStore::send_drink(Drink fDrink, int DrinkQuantity)

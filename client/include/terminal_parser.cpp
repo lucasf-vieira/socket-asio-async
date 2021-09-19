@@ -1,6 +1,6 @@
 #include "terminal_parser.hpp"
 
-Parser::Parser(){}
+Parser::Parser() {}
 
 bool Parser::is_number(const std::string &fString)
 {
@@ -81,3 +81,45 @@ std::array<int, 3> Parser::initialize_drinks()
 
    return DrinkArray;
 }
+
+bool Parser::check_drink_quantity_array(std::array<std::string, 3> DrinksStrArray)
+{
+   for (auto it = DrinksStrArray.begin(); it != DrinksStrArray.end(); it++)
+   {
+      if (!check_drink_quantity_string(*it))
+      {
+         return false;
+      }
+   }
+
+   return true;
+}
+
+// Pede a entrada de quantidade de cada bebida para o usuário
+std::array<int, 3> Parser::request_drinks()
+{
+   std::fflush(stdin);
+   std::array<int, 3> DrinksArray;
+   DrinksArray.fill(0);
+
+   std::array<std::string, 3> DrinksStrArray;
+
+   std::cout << "Entre a quantidade desejada de bebidas no seguinte formato (separado por espaços): '[Qtd. cervejas] [Qtd. aguas] [Qtd. refrigerantes]" << std::endl;
+   std::cout << "Quantia bebidas: ";
+
+   std::cin >> DrinksStrArray.at(0);
+   std::cin >> DrinksStrArray.at(1);
+   std::cin >> DrinksStrArray.at(2);
+
+   while (!check_drink_quantity_array(DrinksStrArray))
+   {
+      std::cout << "Quantia bebidas: ";
+      std::cin >> DrinksStrArray.at(0);
+      std::cin >> DrinksStrArray.at(1);
+      std::cin >> DrinksStrArray.at(2);
+   }
+
+   return DrinksArray;
+}
+
+void read_entries();
