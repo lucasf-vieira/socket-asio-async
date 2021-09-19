@@ -15,22 +15,22 @@ class Session
 {
 public:
    Session(tcp::socket socket);
-   
+
    void start();
 
 private:
-   enum
-   {
-      max_length = 1024
-   };
+   enum Constants : int;
+   std::string mDataString;
 
-   void do_read();
-
-   void do_write(std::size_t length);
+   char data_[1024];
 
    tcp::socket socket_;
 
-   char data_[max_length];
+   void do_write(std::size_t Length);
+   void run_async_write(std::error_code ec);
+
+   void do_read();
+   void run_async_read(std::error_code ec, std::size_t Length);
 };
 
 #endif

@@ -9,15 +9,18 @@
 #include "asio.hpp"
 #include "session.hpp"
 
+using asio::ip::tcp;
+
 class Server
 {
 public:
    Server(asio::io_context &io_context, short port);
 
 private:
-   void do_accept();
+   tcp::acceptor acceptor_;
 
-   asio::ip::tcp::acceptor acceptor_;
+   void do_accept();
+   void run_async_accept(std::error_code ec, tcp::socket Socket);
 };
 
 #endif

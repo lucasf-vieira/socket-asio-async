@@ -11,7 +11,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <memory>
-#include <utility>
+// #include <utility>
 
 #include "asio.hpp"
 #include "server.hpp"
@@ -31,9 +31,8 @@ int main(int argc, char *argv[])
 
       asio::io_context io_context;
 
-      Server s(io_context, std::atoi(argv[1]));
-
-      std::cout << "Server started. Listening on port " << argv[1] << std::endl;
+      Server MainServer(io_context, std::atoi(argv[1]));
+      
       io_context.run();
    }
    catch (std::exception &e)
