@@ -57,7 +57,7 @@ DrinkClient::Drink DrinkClient::soda_type()
 std::ostream &operator<<(std::ostream &output, const DrinkClient &client)
 {
    output << "Quantidade de bebidas com o cliente:" << std::endl;
-   output << "Águas         : " << client.get_water_quantity() << std::endl;
+   output << "Aguas         : " << client.get_water_quantity() << std::endl;
    output << "Cervejas      : " << client.get_beer_quantity() << std::endl;
    output << "Refrigerantes : " << client.get_soda_quantity() << std::endl;
 

@@ -7,47 +7,59 @@ enum Session::Constants : int
    BufferMaxLength = 1024
 };
 
-Session::Session(tcp::socket socket)
+Session::Session(tcp::socket socket, std::shared_ptr<DrinkStore> fDrinkStore)
     : socket_(std::move(socket))
 {
-   std::cout << "Print in Session()" << std::endl;
+   mDrinkStore = fDrinkStore;
 }
 
 void Session::start()
 {
-   std::cout << "Print in Session::start()" << std::endl;
    do_read();
 }
 
 void Session::do_read()
 {
-   std::cout << "Print in Session::do_read() " << std::endl;
    auto self(shared_from_this());
    socket_.async_read_some(asio::buffer(data_, Constants::BufferMaxLength),
-                           [this, self](std::error_code ec, std::size_t Length)
+                           [this, self](std::error_code ec, std::size_t)
                            {
-                              data_[Length] = '\0';
-                              run_async_read(ec, Length);
+                              data_[std::strlen(data_)] = '\0';
+                              run_async_read(ec);
                            });
 }
 
-void Session::run_async_read(std::error_code ec, std::size_t Length)
+void Session::run_async_read(std::error_code ec)
 {
-   std::cout << "Print in Session::do_read(), asio::async_read_some" << std::endl;
    if (!ec)
    {
-      std::cout << "Print in Session::do_read(), asio::async_read_some, if (!ec)" << std::endl;
-      std::cout << data_ << std::endl;
-      do_write(Length);
+      const std::string ClientData(data_);
+
+      std::string Reply;
+      Reply = create_client_message(ClientData);
+
+      do_write(Reply);
    }
 }
 
-void Session::do_write(std::size_t Length)
+std::string Session::create_client_message(const std::string ClientData)
 {
-   std::cout << "Print in Session::do_write()" << std::endl;
+   Parser fParser;
+   std::array<int, 3> ClientDrinksOrder;
+   ClientDrinksOrder = fParser.convert_drinks_string(ClientData);
+
+   std::string ClientMessage;
+   ClientMessage = mDrinkStore->check_drink_list_availability(ClientDrinksOrder);
+   return ClientMessage;
+}
+
+void Session::do_write(std::string Reply)
+{
+   Reply.append("\nAte a proxima!");
+   std::strcpy(data_, Reply.c_str());
 
    auto self(shared_from_this());
-   asio::async_write(socket_, asio::buffer(data_, Length),
+   asio::async_write(socket_, asio::buffer(data_, Constants::BufferMaxLength),
                      [this, self](std::error_code ec, std::size_t)
                      {
                         run_async_write(ec);
@@ -56,10 +68,9 @@ void Session::do_write(std::size_t Length)
 
 void Session::run_async_write(std::error_code ec)
 {
-   std::cout << "Print in Session::do_write(), asio::async_write" << std::endl;
+   std::cout << *mDrinkStore;
    if (!ec)
    {
-      std::cout << "Print in Session::do_write(), asio::async_write, if (!ec) " << std::endl;
       do_read();
    }
 }

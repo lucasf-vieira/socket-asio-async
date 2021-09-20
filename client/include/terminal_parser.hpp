@@ -1,5 +1,5 @@
-#ifndef PARSER_H
-#define PARSER_H
+#ifndef TERMINAL_PARSER_H
+#define TERMINAL_PARSER_H
 
 #include <array>
 #include <iostream>

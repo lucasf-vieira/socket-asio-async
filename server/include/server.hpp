@@ -20,7 +20,7 @@ public:
    Server(asio::io_context &io_context, short port);
 
 private:
-   DrinkStore mDrinkStore;
+   std::shared_ptr<DrinkStore> mDrinkStore;
    tcp::acceptor acceptor_;
 
    void do_accept();

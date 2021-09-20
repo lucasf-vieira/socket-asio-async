@@ -12,9 +12,6 @@
 #include "asio/read.hpp"
 #include "asio/write.hpp"
 
-// Include de arquivos pessoais
-#include "drink_client.hpp"
-
 using asio::ip::tcp;
 
 class Client

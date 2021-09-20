@@ -17,14 +17,9 @@
 #include "asio/read.hpp"
 #include "asio/write.hpp"
 
-#include "client.hpp"
+#include "drink_client.hpp"
 
 using asio::ip::tcp;
-
-enum
-{
-   max_length = 1024
-};
 
 int main(int argc, char *argv[])
 {
@@ -35,12 +30,6 @@ int main(int argc, char *argv[])
          std::cerr << "Usage: ./client.out <host> <port>\n";
          return 1;
       }
-
-      enum
-      {
-         max_length = 1024
-      };
-
       DrinkClient StoreClient;
 
       asio::io_context io_context;

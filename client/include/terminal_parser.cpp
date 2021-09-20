@@ -17,7 +17,7 @@ bool Parser::check_drink_quantity_string(std::string QuantityString)
 
    if (!is_number(QuantityString))
    {
-      std::cerr << ErrorMsg << "Digite apenas numeros." << std::endl;
+      std::cerr << ErrorMsg << "Digite apenas numeros inteiros positivos." << std::endl;
       return false;
    }
 
@@ -104,7 +104,8 @@ std::array<int, 3> Parser::request_drinks()
 
    std::array<std::string, 3> DrinksStrArray;
 
-   std::cout << "Entre a quantidade desejada de bebidas no seguinte formato (separado por espaços): '[Qtd. cervejas] [Qtd. aguas] [Qtd. refrigerantes]" << std::endl;
+   std::cout << "Entre a quantidade desejada de bebidas no seguinte formato:" << std::endl
+             << "'[Qtd. cervejas] [Qtd. aguas] [Qtd. refrigerantes]' (separado por espaços)" << std::endl;
    std::cout << "Quantia bebidas: ";
 
    std::cin >> DrinksStrArray.at(0);
@@ -119,7 +120,10 @@ std::array<int, 3> Parser::request_drinks()
       std::cin >> DrinksStrArray.at(2);
    }
 
+   // Convertendo Strings para inteiros
+   DrinksArray.at(0) = std::atoi(DrinksStrArray.at(0).c_str());
+   DrinksArray.at(1) = std::atoi(DrinksStrArray.at(1).c_str());
+   DrinksArray.at(2) = std::atoi(DrinksStrArray.at(2).c_str());
+
    return DrinksArray;
 }
-
-void read_entries();
