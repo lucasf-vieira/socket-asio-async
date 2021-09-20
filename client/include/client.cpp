@@ -32,6 +32,6 @@ void Client::start(std::array<int, 3> DrinksArray)
 
 void Client::read_server()
 {
-   size_t ReplyLength = asio::read(mSocket, asio::buffer(mReply, 1024));
+   asio::read(mSocket, asio::buffer(mReply, 1024));
    std::cout << mReply << std::endl;
 }

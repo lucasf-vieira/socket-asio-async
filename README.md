@@ -3,7 +3,7 @@
 Socket communication in C++ using ASIO library.
 
 ## Usage
-Para construir o programa utilize o comando make no diretório externo:
+Para construir o programa utilize o comando make:
 
 ```
 make
