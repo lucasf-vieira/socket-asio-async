@@ -24,10 +24,10 @@ private:
 
    char data_[1024];
 
-   tcp::socket socket_;
+   asio::ip::tcp::socket socket_;
 
 public:
-   Session(tcp::socket socket, std::shared_ptr<DrinkStore> fDrinkStore);
+   Session(asio::ip::tcp::socket socket, std::shared_ptr<DrinkStore> fDrinkStore);
 
    void start();
 

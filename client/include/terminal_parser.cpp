@@ -127,3 +127,30 @@ std::array<int, 3> Parser::request_drinks()
 
    return DrinksArray;
 }
+
+void Parser::tokenize(std::string const &str, const char Delim, std::vector<std::string> &SeparatedString)
+{
+   // construct a stream from the string
+   std::stringstream ss(str);
+
+   std::string Buffer;
+   while (std::getline(ss, Buffer, Delim))
+   {
+      SeparatedString.push_back(Buffer);
+   }
+}
+
+std::array<int, 3> Parser::convert_drinks_string(std::string DrinksStr)
+{
+   std::vector<std::string> SeparatedString;
+   const char Delimiter = ' ';
+   tokenize(DrinksStr, Delimiter, SeparatedString);
+
+   std::array<int, 3> DrinksArray;
+   
+   DrinksArray.at(0) = std::atoi(SeparatedString.at(0).c_str());
+   DrinksArray.at(1) = std::atoi(SeparatedString.at(1).c_str());
+   DrinksArray.at(2) = std::atoi(SeparatedString.at(2).c_str());
+
+   return DrinksArray;
+}
